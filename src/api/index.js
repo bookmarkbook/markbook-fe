@@ -36,28 +36,41 @@ export async function ajax(method, url, options) {
 }
 
 export async function get(url, params) {
-  return await ajax('get', BASEURL + url, { params: params });
+  return await ajax('get', BASEURL + url, { params: params }).data;
 }
 
 export async function getAuth(url, params) {
-  return await ajax('get', BASEURL + url, { params: addToken(params) });
+  const responce =  await ajax('get', BASEURL + url,
+    { params: addToken(params) });
+  return responce.data;
 }
 
+export async function postWithoutAuth(url, payload, params, options) {
+  console.log(payload);
+  const responce = await ajax('post', BASEURL + url,
+    { params: params, data: payload, ...options });
+  return responce.data;
+}
 
 export async function post(url, payload, params, options) {
-  return await ajax('post', BASEURL + url,
+  const responce = await ajax('post', BASEURL + url,
     { params: addToken(params), data: payload, ...options });
+  return responce.data;
 }
 
 export async function patch(url, payload, params, options) {
-  return await ajax('patch', BASEURL + url,
+  const responce = await ajax('patch', BASEURL + url,
     { params: addToken(params), data: payload, ...options });
+  return responce.data;
 }
 
 export async function del(url, params) {
-  return await ajax('delete', BASEURL + url, { params: addToken(params) });
+  const responce = await ajax('delete', BASEURL + url,
+    { params: addToken(params) });
+  return responce.data;
 }
 
 export const path = {
-  login: 'login'
+  login: 'login',
+  signup: 'register',
 }

@@ -15,7 +15,11 @@ export default {
     HelloWorld
   },
   mounted(){
-    console.log('m')
+    console.log('m');
+      this.$store.dispatch('user/login', {
+        username: 'sdf',
+        password: 'sdfsdf'
+      });
   }
 }
 </script>

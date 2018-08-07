@@ -1,4 +1,5 @@
 import * as API from '@/api/index';
+import app from '@/main';
 
 const LOCASTORAGE_TOKEN_NAME = 'usertoken';
 function getToken() {
@@ -18,15 +19,20 @@ export default {
     },
   },
   actions: {
-    async login({ commit, dispatch, state, getters }) {
-      const result = API.post(API.path.login, {
-
-      })
+    async login({ commit, dispatch, state, getters }, loginInfo) {
+      const result = await API.postWithoutAuth(API.path.login, {
+        un: loginInfo.username,
+        pwd: loginInfo.password
+      });
+      if (result.code === 404) {
+        app.$router.push({ name: 'login' });
+      }
     },
 
-    async signup({ commit, dispatch, state, getters }) {
-      const result = API.post(API.path.signup, {
-
+    async signup({ commit, dispatch, state, getters }, signupInfo) {
+      const result = await API.postWithoutAuth(API.path.signup, {
+        un: signupInfo.username,
+        pwd: signupInfo.password
       });
     }
 

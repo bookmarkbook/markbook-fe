@@ -16,7 +16,6 @@ export default {
     loginRight
   },
   mounted() {
-    this.$store.commit("clearToken");
   }
 };
 </script>
