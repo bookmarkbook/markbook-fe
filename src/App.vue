@@ -1,19 +1,30 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
+    <sideNav/>
+    
     <router-view/>
   </div>
 </template>
+<script>
+import sideNav from "./components/side-nav";
+export default {
+  components: { sideNav },
+};
+</script>
 
 <style lang="scss">
+body {
+  margin: 0px;
+  height:100vh;
+  overflow: hidden;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-}
 
+  padding-left: 50px;
+}
 </style>

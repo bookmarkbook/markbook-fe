@@ -24,7 +24,7 @@ export default {
         un: loginInfo.username,
         pwd: loginInfo.password
       });
-      if (result.code === 404) {
+      if (result.code === 403) {
         app.$router.push({ name: 'login' });
       }
     },

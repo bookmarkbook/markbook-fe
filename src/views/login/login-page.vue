@@ -25,7 +25,7 @@ export default {
 .login {
   font-family: futura;
   background: #fff;
-  overflow: scroll;
+  overflow: hidden;
   position: fixed;
   left: 0px;
   top: 0px;
