@@ -8,11 +8,11 @@
           sign in
         </span>
       </div>
-      <div class="sign-up center">
+      <router-link to="/signup" tag="div" class="sign-up center">
         <span>
           signup
         </span>
-      </div>
+      </router-link>
     </div>
     <!-- <span  v-if="showError" class="error">{{errorMessage}}</span> -->
   </div>
@@ -36,22 +36,6 @@ export default {
   },
   methods: {
     async login() {
-      // try {
-      //   if(!this.canLogin){
-      //     throw 'not valid';
-      //   }
-      //   await this.$store.dispatch("login", {
-      //     username: this.username,
-      //     password: this.password
-      //   });
-      //   this.$router.push({ name: "home" });
-      // } catch (error) {
-      //   console.error(error);
-      //   this.errorMessage = error;
-      //   setTimeout(() => {
-      //     this.errorMessage = "";
-      //   }, 1000);
-      // }
     }
   }
 };
