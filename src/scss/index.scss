@@ -1,0 +1,13 @@
+$bm-background-color:#fafafa;
+$bm-border-line:1px solid #eee;
+
+
+$bm-side-nav-width: 50px;
+
+.general-clickable{
+  cursor: pointer;
+  transition: 200ms;
+  &:hover{
+    background: #fff;
+  }
+}

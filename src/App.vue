@@ -9,6 +9,9 @@
 import sideNav from "./components/side-nav";
 export default {
   components: { sideNav },
+  mounted(){
+    this.$store.commit('user/userLanding');
+  }
 };
 </script>
 
@@ -17,6 +20,7 @@ body {
   margin: 0px;
   height:100vh;
   overflow: hidden;
+  background:$bm-background-color;
 }
 
 #app {
@@ -25,6 +29,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 
-  padding-left: 50px;
+  padding-left: $bm-side-nav-width;
 }
 </style>

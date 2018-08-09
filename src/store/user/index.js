@@ -13,6 +13,12 @@ export default {
     isLogin: false,
   },
   mutations: {
+    userLanding(state) {
+      const token = getToken();
+      if (token === undefined) {
+        app.$router.push({ name: 'login' });
+      }
+    },
     updateToken(state, token) {
       state.token = token;
       localStorage.setItem(LOCASTORAGE_TOKEN_NAME, token);
