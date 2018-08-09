@@ -43,7 +43,6 @@ export default {
 
 <style lang="scss" scoped>
 input {
-  font-family: futura;
   font-size: 18px;
   padding-left: 5px;
   display: block;

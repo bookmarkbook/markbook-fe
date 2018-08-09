@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <div class="center">
-    <loginLeft/>
-    <loginRight/>
+      <loginLeft/>
+      <loginRight/>
     </div>
   </div>
 </template>
@@ -23,7 +23,6 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-  font-family: futura;
   background: #fff;
   overflow: hidden;
   position: fixed;
