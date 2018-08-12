@@ -68,11 +68,14 @@ export default {
       }
       const relativeY = param.y - this.leftTopY;
       const currentRow = clamp(Math.round(relativeY / 50) - 1, 0, this.items.length - 1);
-      console.log(currentRow);
       if(currentRow !== itemIndex){
         this.items = reinsert(this.items,itemIndex, currentRow);
-        this.updateOrder();
+        this.updateOrder(param.id);
       }
+      this.setOnesView({
+        x: param.translateX,
+        y: param.translateY},param.id
+      );
     },
     handleMouseDown(param) {
       this.setOnesView(
@@ -82,7 +85,6 @@ export default {
         },
         param.id
       );
-      console.log(this.items)
     },
     handleMouseUp(param) {
       this.setOnesView(
@@ -92,15 +94,18 @@ export default {
         },
         param.id
       );
+      this.updateOrder();
     },
-    updateOrder(){
+    updateOrder(ignoreItemTranslateID){
       this.items = this.items.map((item, index) => {
+        if(ignoreItemTranslateID === item.id){
+          return item;
+        }
         return this.setView({
           x:0,
           y:index * 55
         }, item);
       });
-      console.log(this.items.map(item=>item.id));
     }
   },
   computed: {
