@@ -44,9 +44,6 @@ export default {
         translateY: this.initalIndex * 55 + (e.pageY - this.startPositionY),
       });
     },
-    motionEnd() {
-      this.zindex = 0;
-    }
   },
   data() {
     return {

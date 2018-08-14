@@ -1,8 +1,8 @@
 <template>
   <nav class="side-nav">
-    <router-link to="/home" tag="div" class="route general-clickable"></router-link>
-    <router-link to="/bookmark" tag="div" class="route general-clickable"></router-link>
-    <router-link to="/" tag="div" class="route general-clickable"></router-link>
+    <router-link to="/todo" tag="div" class="route general-clickable center-x-y">todo</router-link>
+    <router-link to="/bookmark" tag="div" class="route general-clickable center-x-y">mark</router-link>
+    <!-- <router-link to="/" tag="div" class="route general-clickable center-x-y"></router-link> -->
   </nav>
 </template>
 

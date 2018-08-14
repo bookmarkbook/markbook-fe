@@ -1,7 +1,6 @@
 <template>
   <Motion tag="div" 
   :values="animation" 
-  @motion-end="motionEnd"
   >
     <template slot-scope="ani">
       <div class="todo-item center-x-y"

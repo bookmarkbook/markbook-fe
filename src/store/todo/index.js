@@ -23,9 +23,7 @@ export default {
       state.todo.push(task);
     },
     moveTodo(state, info) {
-      if (info.from !== info.to) {
-        state.todo = reinsert(state.todo, info.from, info.to);
-      }
+      state.todo = reinsert(state.todo, info.from, info.to);
     },
     removeTodo(state, task) {
       state.todo = state.todo.filter(t => t !== task);

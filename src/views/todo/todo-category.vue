@@ -36,24 +36,6 @@ export default {
   },
   components: { Motion, Task },
   methods: {
-    setOnesView(newviewPartial, id) {
-      this.items = this.items.map(item => {
-        if (item.id === id) {
-          return this.setView(newviewPartial, item);
-        }
-        return item;
-      });
-    },
-    setView(newviewPartial, olditem) {
-      const newview = {
-        ...olditem,
-        view: {
-          ...olditem.view,
-          ...newviewPartial
-        }
-      };
-      return newview;
-    },
     handleMove(param) {
       let itemIndex;
       for (let i = 0; i < this.items.length; i++) {
@@ -71,40 +53,26 @@ export default {
         from:itemIndex, to: currentIndex
       })
       
-      // if (currentRow !== itemIndex) {
-      //   this.items = reinsert(this.items, itemIndex, currentIndex);
-      //   this.updateOrder(param.id);
-      // }
-      this.movingX = param.translateX,
-      this.movingY = param.translateY,
-      this.setOnesView(
-        {
-          x: param.translateX,
-          y: param.translateY
-        },
-        param.id
-      );
+      this.movingX = param.translateX;
+      this.movingY = param.translateY;
     },
     handleMouseDown(param) {
       this.movingItemId = param.id;
-      this.setOnesView(
-        {
-          scale: 1.1,
-          shadowSize: 16
-        },
-        param.id
-      );
+      this.updateView();
     },
     handleMouseUp(param) {
       this.movingItemId = null;
-      this.setOnesView(
-        {
-          scale: 1,
-          shadowSize: 1
-        },
-        param.id
-      );
       this.updateView();
+    },
+    setView(newviewPartial, olditem) {
+      const newview = {
+        ...olditem,
+        view: {
+          ...olditem.view,
+          ...newviewPartial
+        }
+      };
+      return newview;
     },
     updateOrder(array) {
       array = array.map((item, index) => {
