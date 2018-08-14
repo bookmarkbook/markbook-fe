@@ -1,4 +1,7 @@
 import { Motion } from "vue-motion";
+
+let globaltaskIndex = 1;
+
 export default {
   components: { Motion },
   methods: {
@@ -6,6 +9,7 @@ export default {
       window.addEventListener("mouseup", this.handelMouseUp);
       window.addEventListener("mousemove", this.handleMouseMove);
       this.isDragging = true;
+      this.zindex = globaltaskIndex++;
       this.initalIndex = this.index;
       this.startPositonX = e.pageX;
       this.startPositionY = e.pageY;
@@ -39,6 +43,9 @@ export default {
         translateX: 0,
         translateY: this.initalIndex * 55 + (e.pageY - this.startPositionY),
       });
+    },
+    motionEnd() {
+      this.zindex = 0;
     }
   },
   data() {
@@ -47,6 +54,7 @@ export default {
       startPositionY: 0,
       initalIndex: 0,
       isDragging: false,
+      zindex:0,
     }
   },
   props: {

@@ -23,6 +23,10 @@ body {
   background:$bm-background-color;
 }
 
+button, textarea, input{
+  outline: none;
+}
+
 #app {
   font-family: futura, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
