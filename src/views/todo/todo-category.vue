@@ -21,14 +21,6 @@
 import { Motion } from "vue-motion";
 import Task from "./todo-task.vue";
 
-function reinsert(arr, from, to) {
-  // const _arr = arr.slice(0);
-  const val = arr[from];
-  arr.splice(from, 1);
-  arr.splice(to, 0, val);
-  return arr.slice();
-}
-
 function clamp(n, min, max) {
   return Math.max(Math.min(n, max), min);
 }
@@ -37,6 +29,9 @@ export default {
   props: {
     title: {
       default: "title"
+    },
+    todoInfo: {
+      default: ()=>[]
     }
   },
   components: { Motion, Task },
@@ -62,22 +57,36 @@ export default {
     handleMove(param) {
       let itemIndex;
       for (let i = 0; i < this.items.length; i++) {
-        if(this.items[i].id === param.id){
-          itemIndex = i
+        if (this.items[i].id === param.id) {
+          itemIndex = i;
         }
       }
       const relativeY = param.y - this.leftTopY;
-      const currentRow = clamp(Math.round(relativeY / 50) - 1, 0, this.items.length - 1);
-      if(currentRow !== itemIndex){
-        this.items = reinsert(this.items,itemIndex, currentRow);
-        this.updateOrder(param.id);
-      }
-      this.setOnesView({
-        x: param.translateX,
-        y: param.translateY},param.id
+      const currentIndex = clamp(
+        Math.round(relativeY / 50) - 1,
+        0,
+        this.items.length - 1
+      );
+      this.$emit('reorder',{
+        from:itemIndex, to: currentIndex
+      })
+      
+      // if (currentRow !== itemIndex) {
+      //   this.items = reinsert(this.items, itemIndex, currentIndex);
+      //   this.updateOrder(param.id);
+      // }
+      this.movingX = param.translateX,
+      this.movingY = param.translateY,
+      this.setOnesView(
+        {
+          x: param.translateX,
+          y: param.translateY
+        },
+        param.id
       );
     },
     handleMouseDown(param) {
+      this.movingItemId = param.id;
       this.setOnesView(
         {
           scale: 1.1,
@@ -87,6 +96,7 @@ export default {
       );
     },
     handleMouseUp(param) {
+      this.movingItemId = null;
       this.setOnesView(
         {
           scale: 1,
@@ -94,63 +104,56 @@ export default {
         },
         param.id
       );
-      this.updateOrder();
+      this.updateView();
     },
-    updateOrder(ignoreItemTranslateID){
-      this.items = this.items.map((item, index) => {
-        if(ignoreItemTranslateID === item.id){
+    updateOrder(array) {
+      array = array.map((item, index) => {
+        if (this.movingItemId === item.id) {
           return item;
         }
-        return this.setView({
-          x:0,
-          y:index * 55
-        }, item);
+        return this.setView(
+          {
+            x: 0,
+            y: index * 55
+          },
+          item
+        );
       });
+      return array;
+    },
+    updateView(){
+      const viewData = this.todoInfo.map(info => {
+      return {
+        ...info,
+        view: {
+          shadowSize: info.id === this.movingItemId? 16 : 1,
+          scale: info.id === this.movingItemId? 1.1 : 1,
+          x: info.id === this.movingItemId? this.movingX : 0,
+          y: info.id === this.movingItemId? this.movingY : 0,
+        }
+      };
+    });
+    this.items = this.updateOrder(viewData);
     }
-  },
-  computed: {
   },
   mounted() {
     this.leftTopX = this.$el.getBoundingClientRect().left;
     this.leftTopY = this.$el.getBoundingClientRect().top;
-    this.updateOrder();
+    this.updateView();
+  },
+  watch: {
+    todoInfo(newItems) {
+      this.updateView();
+    }
   },
   data() {
     return {
       leftTopX: 0,
       leftTopY: 0,
-      items: [
-        {
-          id: 1,
-          title: "sdfsdf sdfsdf",
-          view: {
-            shadowSize: 1,
-            scale: 1,
-            x:0,
-            y:0,
-          }
-        },
-        {
-          id: 2,
-          title: "sdfsdf sdfsdfsdf",
-          view: {
-            shadowSize: 1,
-            scale: 1,
-            x:0,
-            y:0,
-          }
-        },
-        {
-          id: 3,
-          title: "sdfsdf sdfsdfsdf",
-          view: {
-            shadowSize: 1,
-            scale: 1,
-            x:0,
-            y:0,
-          }
-        }
-      ]
+      items: [],
+      movingItemId:null,
+      movingX:0,
+      movingY:0
     };
   }
 };

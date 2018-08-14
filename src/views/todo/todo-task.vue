@@ -4,15 +4,15 @@
   @motion-end="motionEnd"
   >
     <template slot-scope="ani">
-      <div class="todo-item"
+      <div class="todo-item center-x-y"
       @mousedown="handelMouseDown"
       :style="{
           'box-shadow': `0px ${ani.shadowSize}px ${2 * ani.shadowSize}px 0px rgba(0, 0, 0, 0.2) `,
           'transform': `translate3d(${ani.x}px, ${ani.y}px, 0) scale(${ani.scale})`,
-          'z-index': Math.max(0,zindex)
+          'z-index': zindex
           }"
       >
-        {{id}}{{title}}
+        {{title}}
       </div>
     </template >
   </Motion>
@@ -33,9 +33,13 @@ export default task;
   top: 0px;
   left: 0px;
 
-  border: 1px solid #000;
-  background: #f5f5f5;
+  border-radius:5px;
+  background: #fdfdfd;
   cursor: pointer;
+
+  &:hover{
+    background: #fff;
+  }
 }
 </style>
 
