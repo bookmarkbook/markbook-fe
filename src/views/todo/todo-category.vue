@@ -12,6 +12,7 @@
       @mousedown="handleMouseDown"
       @mouseup="handleMouseUp"
       @move="handleMove"
+      @remove="handleRemove"
     />
 
   </div>
@@ -31,7 +32,7 @@ export default {
       default: "title"
     },
     todoInfo: {
-      default: ()=>[]
+      default: () => []
     }
   },
   components: { Motion, Task },
@@ -49,15 +50,18 @@ export default {
         0,
         this.items.length - 1
       );
-      this.$emit('reorder',{
-        from:itemIndex, to: currentIndex
-      })
-      
+      this.$emit("reorder", {
+        from: itemIndex,
+        to: currentIndex
+      });
+
       this.movingX = param.translateX;
       this.movingY = param.translateY;
     },
     handleMouseDown(param) {
       this.movingItemId = param.id;
+      this.movingX = param.translateX;
+      this.movingY = param.translateY;
       this.updateView();
     },
     handleMouseUp(param) {
@@ -89,19 +93,22 @@ export default {
       });
       return array;
     },
-    updateView(){
+    updateView() {
       const viewData = this.todoInfo.map(info => {
-      return {
-        ...info,
-        view: {
-          shadowSize: info.id === this.movingItemId? 16 : 1,
-          scale: info.id === this.movingItemId? 1.1 : 1,
-          x: info.id === this.movingItemId? this.movingX : 0,
-          y: info.id === this.movingItemId? this.movingY : 0,
-        }
-      };
-    });
-    this.items = this.updateOrder(viewData);
+        return {
+          ...info,
+          view: {
+            shadowSize: info.id === this.movingItemId ? 16 : 1,
+            scale: info.id === this.movingItemId ? 1.1 : 1,
+            x: info.id === this.movingItemId ? this.movingX : 0,
+            y: info.id === this.movingItemId ? this.movingY : 0
+          }
+        };
+      });
+      this.items = this.updateOrder(viewData);
+    },
+    handleRemove(e) {
+      this.$store.commit('todo/removeTodo', e.id);
     }
   },
   mounted() {
@@ -119,9 +126,9 @@ export default {
       leftTopX: 0,
       leftTopY: 0,
       items: [],
-      movingItemId:null,
-      movingX:0,
-      movingY:0
+      movingItemId: null,
+      movingX: 0,
+      movingY: 0
     };
   }
 };

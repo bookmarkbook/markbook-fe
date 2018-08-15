@@ -10,9 +10,11 @@
       :todoInfo="this.$store.state.todo.todo"
       @reorder="todoReorder"/>
       <Category title="wip" 
-      :todoInfo="this.$store.state.todo.wip"/>
+      :todoInfo="this.$store.state.todo.wip"
+      @reorder="wipReorder"/>
       <Category title="done" 
-      :todoInfo="this.$store.state.todo.done"/>
+      :todoInfo="this.$store.state.todo.done"
+      @reorder="doneReorder"/>
     </div>
 
   </div>
@@ -34,8 +36,14 @@ export default {
         title: this.newTodo
       })
     },
-    todoReorder(parms){
-      this.$store.commit('todo/moveTodo',parms)
+    todoReorder(params){
+      this.$store.commit('todo/moveTodo',params);
+    },
+    wipReorder(params){
+      this.$store.commit('todo/moveWip',params);
+    },
+    doneReorder(params){
+
     }
   }
 }

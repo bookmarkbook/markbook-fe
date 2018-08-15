@@ -1,6 +1,6 @@
 <template>
   <Motion tag="div" 
-  :values="animation" 
+  :values="animationProxy" 
   >
     <template slot-scope="ani">
       <div class="todo-item center-x-y"
@@ -12,6 +12,8 @@
           }"
       >
         {{title}}
+
+        <button @click="remove"> X </button>
       </div>
     </template >
   </Motion>

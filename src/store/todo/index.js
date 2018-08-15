@@ -20,14 +20,24 @@ export default {
   },
   mutations: {
     addTodo(state, task) {
-      state.todo.push(task);
+      state.todo.unshift(task);
     },
     moveTodo(state, info) {
       state.todo = reinsert(state.todo, info.from, info.to);
     },
-    removeTodo(state, task) {
-      state.todo = state.todo.filter(t => t !== task);
-    }
+    removeTodo(state, id) {
+      state.todo = state.todo.filter(t => t.id !== id);
+    },
+    // addTodo(state, task) {
+    //   state.todo.push(task);
+    // },
+    moveWip(state, info) {
+      state.wip = reinsert(state.wip, info.from, info.to);
+    },
+    // removeTodo(state, task) {
+    //   state.todo = state.todo.filter(t => t !== task);
+    // },
+
   },
   actions: {
 

@@ -4,7 +4,32 @@ let globaltaskIndex = 1;
 
 export default {
   components: { Motion },
+  mounted() {
+    this.animationProxy = {
+      ...this.animation,
+      scale: 0,
+    };
+    setTimeout(() => {
+      this.animationProxy = {
+        ...this.animation,
+      };
+    }, 0);
+  },
+  watch: {
+    animation() {
+      this.animationProxy = this.animation;
+    }
+  },
   methods: {
+    remove() {
+      this.animationProxy = {
+        ...this.animation,
+        scale: 0
+      };
+      setTimeout(() => { // workaround
+        this.$emit('remove', { id: this.id });
+      }, 150);
+    },
     handelMouseDown(e) {
       window.addEventListener("mouseup", this.handelMouseUp);
       window.addEventListener("mousemove", this.handleMouseMove);
@@ -15,7 +40,9 @@ export default {
       this.startPositionY = e.pageY;
       this.updateActiveXY(e);
       this.$emit("mousedown", {
-        id: this.id
+        id: this.id,
+        translateX: 0,
+        translateY: this.initalIndex * 55 + (e.pageY - this.startPositionY),
       });
     },
     handelMouseUp(e) {
@@ -51,7 +78,13 @@ export default {
       startPositionY: 0,
       initalIndex: 0,
       isDragging: false,
-      zindex:0,
+      zindex: 0,
+      animationProxy: {
+        shadowSize: 1,
+        scale:  0,
+        x:  0,
+        y:  0,
+      },
     }
   },
   props: {
