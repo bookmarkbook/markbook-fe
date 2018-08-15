@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="title">
-    <input type="text" v-model="newTodo">
-    <button @click="add"> add</button>
+
+      <h1>{{time}}</h1>
+      <input type="text" v-model="newTodo">
+      <button @click="add"> add</button>
 
     </div>
     <div class="todo-categories">
@@ -26,7 +28,8 @@ export default {
   components:{Category},
   data(){
     return {
-      newTodo: ''
+      newTodo: '',
+      time: '12:24'
     }
   },
   methods:{
@@ -63,6 +66,7 @@ export default {
 
 .title{
   height: 100px;
+  border-bottom: 1px solid #eee;
 }
 </style>
 

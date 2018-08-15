@@ -4,7 +4,7 @@
   >
     <template slot-scope="ani">
       <div class="todo-item center-x-y"
-      @mousedown="handelMouseDown"
+      @mousedown.self="handelMouseDown"
       :style="{
           'box-shadow': `0px ${ani.shadowSize}px ${2 * ani.shadowSize}px 0px rgba(0, 0, 0, 0.2) `,
           'transform': `translate3d(${ani.x}px, ${ani.y}px, 0) scale(${ani.scale})`,
@@ -13,7 +13,7 @@
       >
         {{title}}
 
-        <button @click="remove"> X </button>
+        <i class="fa fa-adjust close" @click="remove"></i>
       </div>
     </template >
   </Motion>
@@ -40,6 +40,20 @@ export default task;
 
   &:hover{
     background: #fff;
+    & .close{
+      opacity: 0.5;
+    }
+  }
+}
+
+.close{
+  transition: 100ms;
+  position: absolute;
+  top:3px;
+  right:3px;
+  opacity: 0;
+  &:hover{
+    opacity: 1 !important;
   }
 }
 </style>
