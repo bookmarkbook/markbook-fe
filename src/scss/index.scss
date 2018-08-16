@@ -12,6 +12,19 @@ $bm-side-nav-width: 50px;
   }
 }
 
+.general-clickable-word{
+  cursor: pointer;
+  color:#444;
+  transition: 200ms;
+  &:hover{
+    color:rgb(43, 220, 78);
+  }
+  &:active{
+  transition: 0ms;
+    color:rgb(32, 157, 57);
+  }
+}
+
 .center-x-y{
   display: flex;
   align-items: center;

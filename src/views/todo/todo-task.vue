@@ -27,7 +27,8 @@ export default task;
 <style lang="scss" scoped>
 .todo-item {
   z-index: 0;
-  width: 100%;
+  width: calc(100% + 10px);
+  margin-left: -5px;
   height: 50px;
 
   position: absolute;

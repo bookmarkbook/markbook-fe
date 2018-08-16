@@ -1,6 +1,7 @@
 <template>
   <div class="todo-category">
     <h2 class="title">{{title}}</h2>
+    <i class="fa fa-plus add general-clickable-word"></i>
 
     <Task
       v-for="(item, index) in items"
@@ -136,7 +137,7 @@ export default {
 
 <style lang="scss" scoped>
 .todo-category {
-  width: 200px;
+  width: 250px;
   height: 400px;
   background: #fbfbfb;
   position: relative;
@@ -146,6 +147,13 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.09),
     0 -2px 0 0 rgba(255, 255, 255, 0.5), 0 8px 15px 0 rgba(0, 0, 0, 0.04);
   border-radius: 5px;
+}
+
+.add {
+  position: absolute;
+  top:-23px;
+  left:0px;
+  cursor: pointer;
 }
 
 .title {

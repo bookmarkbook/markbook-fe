@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="title">
-
-      <h1>{{time}}</h1>
-      <input type="text" v-model="newTodo">
-      <button @click="add"> add</button>
+      <div class="time">
+        <h1 >{{time}}</h1>
+        <span>{{date}}</span>
+      </div>
 
     </div>
     <div class="todo-categories">
@@ -19,17 +19,25 @@
       @reorder="doneReorder"/>
     </div>
 
+    <Model v-if="inCreateNew">
+      <todoModel :isNew="true"/>
+    </Model>
+
   </div>
 </template>
 
 <script>
 import Category from './todo-category';
+import Model from '../../components/model';
+import todoModel from './todo-model';
 export default {
-  components:{Category},
+  components:{Category, Model, todoModel},
   data(){
     return {
       newTodo: '',
-      time: '12:24'
+      time: '12:24',
+      date: '2018 8 16',
+      inCreateNew: false,
     }
   },
   methods:{
@@ -55,7 +63,8 @@ export default {
 <style lang="scss" scoped>
 .todo-categories{
   width:100%;
-  max-width: 800px;
+  max-width: 1000px;
+  min-width: 800px;
   margin:auto;
   height: calc(100vh - 100px);
   display: flex;
@@ -67,6 +76,21 @@ export default {
 .title{
   height: 100px;
   border-bottom: 1px solid #eee;
+}
+
+.time{
+  width:150px;
+  text-align: center;
+  padding-top:23px;
+  >h1{
+    font-size: 43px;
+    line-height: 40px;
+    margin:0px;
+  }
+  >span{
+    color:rgb(132, 152, 172);
+    font-size: 14px;
+  }
 }
 </style>
 
