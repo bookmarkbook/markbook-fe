@@ -1,7 +1,7 @@
 $bm-background-color:#f9f9f9;
 $bm-border-line:1px solid #eee;
 
-
+$bm-font-color: #2c3e50;
 $bm-side-nav-width: 50px;
 
 .general-clickable{
@@ -9,6 +9,10 @@ $bm-side-nav-width: 50px;
   transition: 200ms;
   &:hover{
     background: #fff;
+  }
+  &:active{
+  transition: 0ms;
+    background: rgb(234, 234, 234);
   }
 }
 

@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Login from './views/login/login-page.vue'
 import Signup from './views/signup/signup-page.vue'
 import Todo from './views/todo/todo-page.vue'
+import Bookmark from './views/bookmark/bookmark-view.vue'
 import View404 from './views/error/404'
 
 Vue.use(Router)
@@ -33,6 +34,11 @@ export default new Router({
       path: '/todo',
       name: 'todo',
       component: Todo
+    },
+    {
+      path: '/bookmark',
+      name: 'bookmark',
+      component: Bookmark
     }
     // {
     //   path: '/about',

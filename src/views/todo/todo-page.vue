@@ -1,12 +1,9 @@
 <template>
   <div>
     <div class="title">
-      <div class="time">
-        <h1 >{{time}}</h1>
-        <span>{{date}}</span>
-      </div>
-
+      <mytime/>
     </div>
+
     <div class="todo-categories">
       <Category title="todo" 
       :todoInfo="this.$store.state.todo.todo"
@@ -23,6 +20,7 @@
       <todoModel :isNew="true"/>
     </Model>
 
+    <span class="foot">stay focus stay productive</span>
   </div>
 </template>
 
@@ -30,13 +28,12 @@
 import Category from './todo-category';
 import Model from '../../components/model';
 import todoModel from './todo-model';
+import mytime from './time';
 export default {
-  components:{Category, Model, todoModel},
+  components:{Category, Model, todoModel, mytime},
   data(){
     return {
       newTodo: '',
-      time: '12:24',
-      date: '2018 8 16',
       inCreateNew: false,
     }
   },
@@ -78,19 +75,14 @@ export default {
   border-bottom: 1px solid #eee;
 }
 
-.time{
-  width:150px;
+.foot{
+  position: fixed;
+  bottom:10px;
   text-align: center;
-  padding-top:23px;
-  >h1{
-    font-size: 43px;
-    line-height: 40px;
-    margin:0px;
-  }
-  >span{
-    color:rgb(132, 152, 172);
-    font-size: 14px;
-  }
+  width: calc(100vw - 50px);
+  z-index: -1;
+  font-size: 12px;
+  color:rgb(223, 223, 223);
 }
 </style>
 

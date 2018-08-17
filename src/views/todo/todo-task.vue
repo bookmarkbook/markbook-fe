@@ -13,7 +13,8 @@
       >
         {{title}}
 
-        <i class="fa fa-adjust close" @click="remove"></i>
+        <i class="fa fa-times close" @click="remove"></i>
+        <i class="fa fa-adjust update" @click="remove"></i>
       </div>
     </template >
   </Motion>
@@ -44,6 +45,20 @@ export default task;
     & .close{
       opacity: 0.5;
     }
+    & .update{
+      opacity: 0.5;
+    }
+  }
+}
+
+.update{
+  transition: 100ms;
+  position: absolute;
+  top:3px;
+  left:3px;
+  opacity: 0;
+  &:hover{
+    opacity: 1 !important;
   }
 }
 
