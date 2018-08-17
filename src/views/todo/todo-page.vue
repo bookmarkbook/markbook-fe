@@ -41,7 +41,7 @@ export default {
   data(){
     return {
       newTodo: '',
-      inCreateNew: true,
+      inCreateNew: false,
     }
   },
   methods:{

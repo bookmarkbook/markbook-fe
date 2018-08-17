@@ -3,12 +3,12 @@
     <router-link to="/todo" tag="div" 
     :active-class="'nav-active'"
     class="route general-clickable center-x-y">
-      <i class="fas fa-clipboard-check"></i>
+      <font-awesome-icon icon="clipboard-check" />
     </router-link>
     <router-link to="/bookmark" tag="div" 
     :active-class="'nav-active'"
     class="route general-clickable center-x-y">
-      <i class="fas fa-bookmark"></i>
+      <font-awesome-icon icon="bookmark" />
     </router-link>
     <!-- <router-link to="/" tag="div" class="route general-clickable center-x-y"></router-link> -->
   </nav>
@@ -50,7 +50,7 @@ export default {
   border:$bm-border-line;
   margin-bottom:10px;
   position: relative;
-  >i{
+  >*{
     font-size: 20px;
   }
 }

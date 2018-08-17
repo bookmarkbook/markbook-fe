@@ -6,7 +6,7 @@
       height: height
       }"
   >
-    <i class="fa fa-times model-close" @click="close"></i>
+      <font-awesome-icon icon="times" class=" model-close"  @click="close"/>
     <slot></slot>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="todo-category">
     <h2 class="title">{{title}}</h2>
-    <i class="fa fa-plus add general-clickable-word"></i>
+    <font-awesome-icon icon="plus" class="add general-clickable-word"/>
 
     <Task
       v-for="(item, index) in items"
@@ -116,12 +116,28 @@ export default {
     },
     handleRemove(e) {
       this.$store.commit('todo/removeTodo', e.id);
+    },
+    updateBBox(){
+      const bbox = this.$el.getBoundingClientRect();
+      this.leftTopX = bbox.left;
+      this.leftTopY = bbox.top;
+      this.rightBottomX = bbox.right;
+      this.rightBottomY = bbox.bottom;
+    },
+    checkisInBBox(x, y){
+      return x>=this.leftTopX
+        && x<=this.rightBottomX
+        && y>=this.leftTopY
+        && y<=this.rightBottomY
     }
   },
   mounted() {
-    this.leftTopX = this.$el.getBoundingClientRect().left;
-    this.leftTopY = this.$el.getBoundingClientRect().top;
     this.updateView();
+    this.updateBBox();
+    window.addEventListener('resize', this.updateBBox);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.updateBBox);
   },
   watch: {
     todoInfo(newItems) {
@@ -132,6 +148,8 @@ export default {
     return {
       leftTopX: 0,
       leftTopY: 0,
+      rightBottomX:0,
+      rightBottomY:0,
       items: [],
       movingItemId: null,
       movingX: 0,

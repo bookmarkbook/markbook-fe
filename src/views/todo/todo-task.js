@@ -58,7 +58,6 @@ export default {
       this.initalIndex = this.index;
       this.startPositonX = e.pageX;
       this.startPositionY = e.pageY;
-      this.updateActiveXY(e);
       this.$emit("mousedown", {
         id: this.id,
         translateX: 0,
@@ -68,7 +67,6 @@ export default {
     handelMouseUp(e) {
       window.removeEventListener("mouseup", this.handelMouseUp);
       window.removeEventListener("mousemove", this.handleMouseMove);
-      this.updateActiveXY(e);
       this.isDragging = false;
       this.$emit("mouseup", {
         id: this.id
@@ -77,12 +75,7 @@ export default {
 
       }, 0);
     },
-    updateActiveXY(e) {
-      this.y = this.initalIndex * 55 + (e.pageY - this.startPositionY);
-      this.x = 0;
-    },
     handleMouseMove(e) {
-      this.updateActiveXY(e);
       this.$emit("move", {
         id: this.id,
         x: e.pageX,

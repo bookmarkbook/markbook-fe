@@ -22,4 +22,4 @@ yarn-error.log*
 
 # lockfile
 package-lock.json
-yarn-lock.json
+yarn.lock

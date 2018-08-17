@@ -19,8 +19,8 @@
         }"
         ></div>
         {{title}}
-        <i class="fa fa-times close" @click="remove"></i>
-        <i class="fa fa-adjust update" @click="remove"></i>
+        <font-awesome-icon icon="times" class="close"  @click="remove"/>
+        <font-awesome-icon icon="adjust" class="update" @click="remove"/>
       </div>
     </template >
   </Motion>
