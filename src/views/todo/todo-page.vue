@@ -19,8 +19,12 @@
       @reorder="doneReorder"/>
     </div>
 
-    <Model v-if="inCreateNew">
-      <todoModel :isNew="true"/>
+    <Model 
+    v-if="inCreateNew"
+    width="500px"
+    height="380px"
+    >
+      <todoModel :isNew="false"/>
     </Model>
 
     <span class="foot">stay focus stay productive</span>
@@ -37,7 +41,7 @@ export default {
   data(){
     return {
       newTodo: '',
-      inCreateNew: false,
+      inCreateNew: true,
     }
   },
   methods:{

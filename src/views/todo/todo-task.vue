@@ -12,6 +12,7 @@
           }"
       >
         <div class="progress" 
+        @mousedown.self="handelMouseDown"
         :style="{
           width: width + '%',
           background: background

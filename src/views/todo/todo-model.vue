@@ -1,27 +1,33 @@
 <template>
   <div class="todo-model">
-    <div class="title">
-      <input type="text" 
-      class="input input-general"
-      v-model="newTodo">
+
+    <input type="text" 
+    class="input input-general"
+    v-model="newTodo"
+    spellcheck="false"
+    placeholder="place your task title here"
+    >
+
+    <textarea 
+    class="description input-general" 
+    spellcheck="false"
+    placeholder="make descriptions about your task"></textarea>
+
+    <div class="btn-group">
       <button 
       class="button-general"
       @click="add" 
       v-if="isNew"> add new todo</button>
       <button 
       class="button-general"
-      @click="deleteItem" 
-      v-if="!isNew"> delete</button>
-      <button 
-      class="button-general"
       @click="update" 
       v-if="!isNew"> update</button>
+      <button 
+      class="button-general"
+      @click="deleteItem" 
+      v-if="!isNew"> delete</button>
     </div>
-    <div>
-      <textarea 
-      class="description input-general" 
-      spellcheck="false"></textarea>
-    </div>
+
   </div>
 </template>
 
@@ -64,7 +70,9 @@ export default {
 
 .button-general{
   border-radius:3px;
+  height: 35px;
   border: 1px solid rgb(137, 137, 137);
+  margin:5px;
 }
 
 .input-general{
@@ -73,20 +81,25 @@ export default {
 }
 
 .input{
-  width:200px;
-  height:25px;
+  box-sizing: border-box;
+  width:300px;
+  height:35px;
+  padding: 5px;
 }
 
 .description{
-  width:400px;
+  box-sizing: border-box;
+  width:300px;
   height:200px;
   resize: none;
+  padding: 5px;
 }
 
-.title{
+.btn-group{
   display: flex;
-  width:350px;
-  justify-content: space-between;
+  flex-direction: row-reverse;
+  width:300px;
+  margin-right: -10px;
 }
 </style>
 

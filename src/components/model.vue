@@ -1,6 +1,11 @@
 <template>
 <div class="model-wrap center-x-y" @click="close">
-  <div class="model ">
+  <div class="model "
+    :style="{
+      width: width,
+      height: height
+      }"
+  >
     <i class="fa fa-times model-close" @click="close"></i>
     <slot></slot>
   </div>
@@ -9,6 +14,14 @@
 
 <script>
 export default {
+  props:{
+    width:{
+      default: '600px'
+    },
+    height: {
+      default: '400px'
+    }
+  },
   methods:{
     close(){
       this.$emit('close');
@@ -30,8 +43,6 @@ export default {
 }
 
 .model{
-  width:600px;
-  height: 400px;
   background: $bm-background-color;
   border-radius: 5px;
   position: relative;
