@@ -45,22 +45,24 @@ export default {
   components: { Motion, Task },
   methods: {
     handleMove(param) {
-      let itemIndex;
-      for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i].id === param.id) {
-          itemIndex = i;
+      if(this.checkInBoundingBox(param.x, param.y)){
+        let itemIndex;
+        for (let i = 0; i < this.items.length; i++) {
+          if (this.items[i].id === param.id) {
+            itemIndex = i;
+          }
         }
+        const relativeY = param.y - this.leftTopY;
+        const currentIndex = clamp(
+          Math.round(relativeY / 50) - 1,
+          0,
+          this.items.length - 1
+        );
+        this.$emit("reorder", {
+          from: itemIndex,
+          to: currentIndex
+        });
       }
-      const relativeY = param.y - this.leftTopY;
-      const currentIndex = clamp(
-        Math.round(relativeY / 50) - 1,
-        0,
-        this.items.length - 1
-      );
-      this.$emit("reorder", {
-        from: itemIndex,
-        to: currentIndex
-      });
 
       this.movingX = param.translateX;
       this.movingY = param.translateY;
@@ -116,12 +118,28 @@ export default {
     },
     handleRemove(e) {
       this.$store.commit('todo/removeTodo', e.id);
+    },
+    updateBoundingBox(){
+      const bbox = this.$el.getBoundingClientRect();
+      this.leftTopX = bbox.left;
+      this.leftTopY = bbox.top;
+      this.rightBottomX = bbox.right;
+      this.rightBottomY = bbox.bottom;
+    },
+    checkInBoundingBox(x,y){
+      return x>=this.leftTopX 
+      && x<=this.rightBottomX
+      && y>=this.leftTopY
+      && y<=this.rightBottomY
     }
   },
   mounted() {
-    this.leftTopX = this.$el.getBoundingClientRect().left;
-    this.leftTopY = this.$el.getBoundingClientRect().top;
+    this.updateBoundingBox();
     this.updateView();
+    window.addEventListener('resize', this.updateBoundingBox);
+  },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.updateBoundingBox);
   },
   watch: {
     todoInfo(newItems) {
@@ -132,6 +150,8 @@ export default {
     return {
       leftTopX: 0,
       leftTopY: 0,
+      rightBottomX:0,
+      rightBottomY:0,
       items: [],
       movingItemId: null,
       movingX: 0,

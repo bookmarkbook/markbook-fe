@@ -87,7 +87,7 @@ export default {
         id: this.id,
         x: e.pageX,
         y: e.pageY,
-        translateX: 0,
+        translateX: e.pageX - this.startPositonX,
         translateY: this.initalIndex * 55 + (e.pageY - this.startPositionY),
       });
     },
