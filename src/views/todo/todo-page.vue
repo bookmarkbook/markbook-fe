@@ -7,12 +7,15 @@
     <div class="todo-categories">
       <Category title="todo" 
       :todoInfo="this.$store.state.todo.todo"
+      type="todo"
       @reorder="todoReorder"/>
       <Category title="wip" 
       :todoInfo="this.$store.state.todo.wip"
+      type="wip"
       @reorder="wipReorder"/>
       <Category title="done" 
       :todoInfo="this.$store.state.todo.done"
+      type="done"
       @reorder="doneReorder"/>
     </div>
 

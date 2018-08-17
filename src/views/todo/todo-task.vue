@@ -11,8 +11,13 @@
           'z-index': zindex
           }"
       >
+        <div class="progress" 
+        :style="{
+          width: width + '%',
+          background: background
+        }"
+        ></div>
         {{title}}
-
         <i class="fa fa-times close" @click="remove"></i>
         <i class="fa fa-adjust update" @click="remove"></i>
       </div>
@@ -71,6 +76,15 @@ export default task;
   &:hover{
     opacity: 1 !important;
   }
+}
+
+.progress{
+  height:100%;
+  position: absolute;
+  left:0px;
+  transition: 200ms;
+  border-radius:3px;
+  z-index: -1;
 }
 </style>
 

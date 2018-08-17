@@ -9,6 +9,9 @@
       :id = "item.id"
       :index = "index"
       :title="item.title"
+      :timeAll="item.timeAll"
+      :timeUse="item.timeUse"
+      :status="type"
       :animation="item.view"
       @mousedown="handleMouseDown"
       @mouseup="handleMouseUp"
@@ -31,6 +34,9 @@ export default {
   props: {
     title: {
       default: "title"
+    },
+    type:{
+      default: 'wip'
     },
     todoInfo: {
       default: () => []

@@ -20,6 +20,26 @@ export default {
       this.animationProxy = this.animation;
     }
   },
+  computed: {
+    background() {
+      if (this.status === 'wip') {
+        return '#76c773'
+      } else if (this.status === 'todo') {
+        return '#dfd199'
+      } else if (this.status === 'done'){
+        return '#6b8bac'
+      } else {
+        return '#ddd'
+      }
+    },
+    width() {
+      if (this.timeAll > 0 && this.timeUse > 0) {
+        return Math.floor(this.timeUse * 100 / this.timeAll);
+      } else {
+        return 0;
+      }
+    }
+  },
   methods: {
     remove() {
       this.animationProxy = {
@@ -97,8 +117,17 @@ export default {
     index: {
       default: 0
     },
+    status: {
+      default: 'wip'
+    },
     title: {
       default: "a task"
+    },
+    timeUse: {
+      default: 0
+    },
+    timeAll: {
+      default: 0
     },
     description: {
       default: "a task description"
