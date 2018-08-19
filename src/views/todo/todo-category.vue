@@ -45,6 +45,8 @@ export default {
   components: { Motion, Task },
   methods: {
     handleMove(param) {
+      this.$store.state.todo.movingX = param.translateX;
+      this.$store.state.todo.movingY = param.translateY;
       if(this.checkInBoundingBox(param.x, param.y)){
         let itemIndex;
         for (let i = 0; i < this.items.length; i++) {
@@ -58,23 +60,25 @@ export default {
           0,
           this.items.length - 1
         );
+        this.$store.state.todo.isMovingTransefer = false;
         this.$emit("reorder", {
           from: itemIndex,
           to: currentIndex
         });
+      } else {
+        this.$store.state.todo.isMovingTransefer = true;
+        this.updateView();
       }
 
-      this.movingX = param.translateX;
-      this.movingY = param.translateY;
     },
     handleMouseDown(param) {
-      this.movingItemId = param.id;
-      this.movingX = param.translateX;
-      this.movingY = param.translateY;
+      this.$store.state.todo.movingItemId = param.id;
+      this.$store.state.todo.movingX = param.translateX;
+      this.$store.state.todo.movingY = param.translateY;
       this.updateView();
     },
     handleMouseUp(param) {
-      this.movingItemId = null;
+      this.$store.state.todo.movingItemId = null;
       this.updateView();
     },
     setView(newviewPartial, olditem) {
@@ -88,14 +92,18 @@ export default {
       return newview;
     },
     updateOrder(array) {
+      let yReduce = 0;
       array = array.map((item, index) => {
-        if (this.movingItemId === item.id) {
+        if (this.$store.state.todo.movingItemId === item.id) {
+          if(this.$store.state.todo.isMovingTransefer){
+            yReduce += 55;
+          }
           return item;
         }
         return this.setView(
           {
             x: 0,
-            y: index * 55
+            y: index * 55 - yReduce
           },
           item
         );
@@ -103,21 +111,22 @@ export default {
       return array;
     },
     updateView() {
+      const mid = this.$store.state.todo.movingItemId;
       const viewData = this.todoInfo.map(info => {
         return {
           ...info,
           view: {
-            shadowSize: info.id === this.movingItemId ? 16 : 1,
-            scale: info.id === this.movingItemId ? 1.1 : 1,
-            x: info.id === this.movingItemId ? this.movingX : 0,
-            y: info.id === this.movingItemId ? this.movingY : 0
+            shadowSize: info.id === mid ? 16 : 1,
+            scale: info.id === mid ? 1.1 : 1,
+            x: info.id === mid ? this.$store.state.todo.movingX : 0,
+            y: info.id === mid ? this.$store.state.todo.movingY : 0
           }
         };
       });
       this.items = this.updateOrder(viewData);
     },
     handleRemove(e) {
-      this.$store.commit('todo/removeTodo', e.id);
+      this.$emit('remove', e.id)
     },
     updateBoundingBox(){
       const bbox = this.$el.getBoundingClientRect();
@@ -153,9 +162,6 @@ export default {
       rightBottomX:0,
       rightBottomY:0,
       items: [],
-      movingItemId: null,
-      movingX: 0,
-      movingY: 0
     };
   }
 };

@@ -17,6 +17,10 @@ export default {
     todo: todosMock,
     wip: wipsMock,
     done: donwsMock,
+    movingItemId: undefined,
+    isMovingTransefer: false,
+    movingX: 0,
+    movingY: 0,
   },
   mutations: {
     addTodo(state, task) {

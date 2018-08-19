@@ -8,7 +8,8 @@
       <Category title="todo" 
       :todoInfo="this.$store.state.todo.todo"
       type="todo"
-      @reorder="todoReorder"/>
+      @reorder="todoReorder"
+      @remove="removeTodo"/>
       <Category title="wip" 
       :todoInfo="this.$store.state.todo.wip"
       type="wip"
@@ -53,6 +54,9 @@ export default {
     },
     todoReorder(params){
       this.$store.commit('todo/moveTodo',params);
+    },
+    removeTodo(params){
+      this.$store.commit('todo/removeTodo', params);
     },
     wipReorder(params){
       this.$store.commit('todo/moveWip',params);
