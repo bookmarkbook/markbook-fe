@@ -27,13 +27,13 @@ export const todosMock = [
 
 export const wipsMock = [
   {
-    id: 1,
+    id: 5,
     title: "wip1",
     timeUse: 4,
     timeAll: 12,
   },
   {
-    id: 2,
+    id: 6,
     title: "wip2",
     timeUse: 10,
     timeAll: 12,
@@ -42,13 +42,13 @@ export const wipsMock = [
 
 export const donwsMock = [
   {
-    id: 1,
+    id: 7,
     title: "doneA",
     timeUse: 12,
     timeAll: 12,
   },
   {
-    id: 2,
+    id: 8,
     title: "doneB",
     timeUse: 11,
     timeAll: 12,

@@ -44,9 +44,16 @@ export default {
   },
   components: { Motion, Task },
   methods: {
+    getIndex(pageY){
+      const relativeY = pageY - this.leftTopY;
+      return clamp(
+          Math.round(relativeY / 50) - 1,
+          0,
+          this.needAddPersudoItem? this.items.length:this.items.length - 1
+        );
+    },
     handleMove(param) {
-      this.$store.state.todo.movingX = param.translateX;
-      this.$store.state.todo.movingY = param.translateY;
+      this.$store.commit('todo/updateMovingInfo', param);
       if(this.checkInBoundingBox(param.x, param.y)){
         let itemIndex;
         for (let i = 0; i < this.items.length; i++) {
@@ -54,12 +61,7 @@ export default {
             itemIndex = i;
           }
         }
-        const relativeY = param.y - this.leftTopY;
-        const currentIndex = clamp(
-          Math.round(relativeY / 50) - 1,
-          0,
-          this.items.length - 1
-        );
+        const currentIndex = this.getIndex(param.y);
         this.$store.state.todo.isMovingTransefer = false;
         this.$emit("reorder", {
           from: itemIndex,
@@ -72,13 +74,11 @@ export default {
 
     },
     handleMouseDown(param) {
-      this.$store.state.todo.movingItemId = param.id;
-      this.$store.state.todo.movingX = param.translateX;
-      this.$store.state.todo.movingY = param.translateY;
+      this.$store.commit('todo/startMoving', param);
       this.updateView();
     },
     handleMouseUp(param) {
-      this.$store.state.todo.movingItemId = null;
+      this.$store.state.todo.movingItemId = undefined;
       this.updateView();
     },
     setView(newviewPartial, olditem) {
@@ -99,6 +99,10 @@ export default {
             yReduce += 55;
           }
           return item;
+        } else {
+          if(this.needAddPersudoItem && index === this.persudoItemIndex){
+            yReduce -= 55;
+          }
         }
         return this.setView(
           {
@@ -142,6 +146,43 @@ export default {
       && y<=this.rightBottomY
     }
   },
+  computed: {
+    hasMovingItem() {
+      return this.$store.state.todo.movingItemId !== undefined;
+    },
+    hasMovingItemInlist(){
+      let hasId = false;
+      for (let i = 0; i < this.todoInfo.length; i++) {
+        if(this.todoInfo[i].id === this.$store.state.todo.movingItemId){
+          hasId = true;
+          break;
+        }
+      }
+      return hasId;
+    },
+    needAddPersudoItem(){
+      return !this.hasMovingItemInlist && this.hasMovingItem && this.checkInBoundingBox(
+        this.$store.state.todo.movingPageX,
+        this.$store.state.todo.movingPageY,
+      )
+    },
+    persudoItemIndex(){
+      if(this.needAddPersudoItem){
+        return this.getIndex(this.$store.state.todo.movingPageY);
+      }else{
+        return -1;
+      }
+    }
+  },
+  watch:{
+    persudoItemIndex(newVal){
+      // console.log(newVal);
+      this.updateView();
+    },
+    todoInfo(newItems) {
+      this.updateView();
+    }
+  },
   mounted() {
     this.updateBoundingBox();
     this.updateView();
@@ -149,11 +190,6 @@ export default {
   },
   beforeDestroy(){
     window.removeEventListener('resize', this.updateBoundingBox);
-  },
-  watch: {
-    todoInfo(newItems) {
-      this.updateView();
-    }
   },
   data() {
     return {

@@ -17,12 +17,29 @@ export default {
     todo: todosMock,
     wip: wipsMock,
     done: donwsMock,
+
     movingItemId: undefined,
     isMovingTransefer: false,
     movingX: 0,
     movingY: 0,
+    movingPageX: 0,
+    movingPageY: 0,
   },
   mutations: {
+    updateMovingInfo(state, info) {
+      state.movingX = info.translateX;
+      state.movingY = info.translateY;
+      state.movingPageX = info.x;
+      state.movingPageY = info.y;
+    },
+    startMoving(state, info) {
+      state.movingItemId = info.id;
+      state.movingX = info.translateX;
+      state.movingY = info.translateY;
+    },
+    stopMoving(state) {
+      state.movingItemId = undefined;
+    },
     addTodo(state, task) {
       state.todo.unshift(task);
     },
