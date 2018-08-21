@@ -5,19 +5,21 @@
     </div>
 
     <div class="todo-categories">
-      <Category title="todo" 
-      :todoInfo="this.$store.state.todo.todo"
+      <Category 
+      title="todo" 
+      todoListName="todo"
       type="todo"
-      @reorder="todoReorder"
-      @remove="removeTodo"/>
-      <Category title="wip" 
-      :todoInfo="this.$store.state.todo.wip"
+      />
+      <Category 
+      title="wip" 
+      todoListName="wip"
       type="wip"
-      @reorder="wipReorder"/>
-      <Category title="done" 
-      :todoInfo="this.$store.state.todo.done"
+      />
+      <Category 
+      title="done" 
+      todoListName="done"
       type="done"
-      @reorder="doneReorder"/>
+      />
     </div>
 
     <Model 
@@ -46,28 +48,6 @@ export default {
     }
   },
   methods:{
-    add(){
-      this.$store.commit('todo/addTodo',{
-        task:{
-        id:Math.random(),
-        title: this.newTodo
-      },
-      place: 0,
-      list: 'todo'
-      })
-    },
-    todoReorder(params){
-      this.$store.commit('todo/moveTodo',params);
-    },
-    removeTodo(params){
-      this.$store.commit('todo/removeTodo', params);
-    },
-    wipReorder(params){
-      this.$store.commit('todo/moveWip',params);
-    },
-    doneReorder(params){
-
-    }
   }
 }
 </script>

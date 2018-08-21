@@ -39,13 +39,13 @@ export default {
       state.movingItemId = undefined;
     },
     addTodo(state, params) {
-      state[params.list] = state[params.list].splice(params.place, 0, params.task);
+      state[params.list].splice(params.place, 0, params.task);
     },
     moveTodo(state, info) {
       reinsert(state[info.fromList], state[ info.toList], info.from, info.to);
     },
-    removeTodo(state, id) {
-      state.todo = state.todo.filter(t => t.id !== id);
+    removeTodo(state, params) {
+      state[params.list] = state[params.list].filter(t => t.id !== params.id);
     },
 
   },

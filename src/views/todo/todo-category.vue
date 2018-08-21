@@ -1,7 +1,10 @@
 <template>
   <div class="todo-category">
     <h2 class="title">{{title}}</h2>
-    <font-awesome-icon icon="plus" class="add general-clickable-word"/>
+    <font-awesome-icon 
+    @click="add"
+    icon="plus" 
+    class="add general-clickable-word"/>
 
     <Task
       v-for="(item, index) in items"
@@ -35,26 +38,36 @@ export default {
     title: {
       default: "title"
     },
-    type:{
-      default: 'wip'
+    type: {
+      default: "wip"
     },
-    todoInfo: {
-      default: () => []
+    todoListName: {
+      default: "todo"
     }
   },
   components: { Motion, Task },
   methods: {
-    getIndex(pageY){
+    add() {
+      this.$store.commit("todo/addTodo", {
+        task: {
+          id: Math.random(),
+          title: 'my new task'
+        },
+        place: 0,
+        list: this.todoListName
+      });
+    },
+    getIndex(pageY) {
       const relativeY = pageY - this.leftTopY;
       return clamp(
-          Math.round(relativeY / 50) - 1,
-          0,
-          this.needAddPersudoItem? this.items.length:this.items.length - 1
-        );
+        Math.round(relativeY / 50) - 1,
+        0,
+        this.needAddPersudoItem ? this.items.length : this.items.length - 1
+      );
     },
     handleMove(param) {
-      this.$store.commit('todo/updateMovingInfo', param);
-      if(this.checkInBoundingBox(param.x, param.y)){
+      this.$store.commit("todo/updateMovingInfo", param);
+      if (this.checkInBoundingBox(param.x, param.y)) {
         let itemIndex;
         for (let i = 0; i < this.items.length; i++) {
           if (this.items[i].id === param.id) {
@@ -63,9 +76,10 @@ export default {
         }
         const currentIndex = this.getIndex(param.y);
         this.$store.state.todo.isMovingTransefer = false;
-        this.$emit("reorder", {
-          fromList: 'todo',
-          toList:'todo',
+
+        this.$store.commit("todo/moveTodo", {
+          fromList: this.todoListName,
+          toList: this.todoListName,
           from: itemIndex,
           to: currentIndex
         });
@@ -73,10 +87,9 @@ export default {
         this.$store.state.todo.isMovingTransefer = true;
         this.updateView();
       }
-
     },
     handleMouseDown(param) {
-      this.$store.commit('todo/startMoving', param);
+      this.$store.commit("todo/startMoving", param);
       this.updateView();
     },
     handleMouseUp(param) {
@@ -97,12 +110,12 @@ export default {
       let yReduce = 0;
       array = array.map((item, index) => {
         if (this.$store.state.todo.movingItemId === item.id) {
-          if(this.$store.state.todo.isMovingTransefer){
+          if (this.$store.state.todo.isMovingTransefer) {
             yReduce += 55;
           }
           return item;
         } else {
-          if(this.needAddPersudoItem && index === this.persudoItemIndex){
+          if (this.needAddPersudoItem && index === this.persudoItemIndex) {
             yReduce -= 55;
           }
         }
@@ -132,52 +145,64 @@ export default {
       this.items = this.updateOrder(viewData);
     },
     handleRemove(e) {
-      this.$emit('remove', e.id)
+      this.$store.commit("todo/removeTodo", {
+        list: this.todoListName,
+        id: e.id
+      });
     },
-    updateBoundingBox(){
+    updateBoundingBox() {
       const bbox = this.$el.getBoundingClientRect();
       this.leftTopX = bbox.left;
       this.leftTopY = bbox.top;
       this.rightBottomX = bbox.right;
       this.rightBottomY = bbox.bottom;
     },
-    checkInBoundingBox(x,y){
-      return x>=this.leftTopX 
-      && x<=this.rightBottomX
-      && y>=this.leftTopY
-      && y<=this.rightBottomY
+    checkInBoundingBox(x, y) {
+      return (
+        x >= this.leftTopX &&
+        x <= this.rightBottomX &&
+        y >= this.leftTopY &&
+        y <= this.rightBottomY
+      );
     }
   },
   computed: {
+    todoInfo() {
+      return this.$store.state.todo[this.todoListName];
+    },
     hasMovingItem() {
       return this.$store.state.todo.movingItemId !== undefined;
     },
-    hasMovingItemInlist(){
+    hasMovingItemInlist() {
       let hasId = false;
       for (let i = 0; i < this.todoInfo.length; i++) {
-        if(this.todoInfo[i].id === this.$store.state.todo.movingItemId){
+        if (this.todoInfo[i].id === this.$store.state.todo.movingItemId) {
           hasId = true;
           break;
         }
       }
       return hasId;
     },
-    needAddPersudoItem(){
-      return !this.hasMovingItemInlist && this.hasMovingItem && this.checkInBoundingBox(
-        this.$store.state.todo.movingPageX,
-        this.$store.state.todo.movingPageY,
-      )
+    needAddPersudoItem() {
+      return (
+        !this.hasMovingItemInlist &&
+        this.hasMovingItem &&
+        this.checkInBoundingBox(
+          this.$store.state.todo.movingPageX,
+          this.$store.state.todo.movingPageY
+        )
+      );
     },
-    persudoItemIndex(){
-      if(this.needAddPersudoItem){
+    persudoItemIndex() {
+      if (this.needAddPersudoItem) {
         return this.getIndex(this.$store.state.todo.movingPageY);
-      }else{
+      } else {
         return -1;
       }
     }
   },
-  watch:{
-    persudoItemIndex(newVal){
+  watch: {
+    persudoItemIndex(newVal) {
       // console.log(newVal);
       this.updateView();
     },
@@ -188,18 +213,18 @@ export default {
   mounted() {
     this.updateBoundingBox();
     this.updateView();
-    window.addEventListener('resize', this.updateBoundingBox);
+    window.addEventListener("resize", this.updateBoundingBox);
   },
-  beforeDestroy(){
-    window.removeEventListener('resize', this.updateBoundingBox);
+  beforeDestroy() {
+    window.removeEventListener("resize", this.updateBoundingBox);
   },
   data() {
     return {
       leftTopX: 0,
       leftTopY: 0,
-      rightBottomX:0,
-      rightBottomY:0,
-      items: [],
+      rightBottomX: 0,
+      rightBottomY: 0,
+      items: []
     };
   }
 };
@@ -221,8 +246,8 @@ export default {
 
 .add {
   position: absolute;
-  top:-23px;
-  left:0px;
+  top: -23px;
+  left: 0px;
   cursor: pointer;
 }
 

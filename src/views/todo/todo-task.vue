@@ -4,6 +4,8 @@
   >
     <template slot-scope="ani">
       <div class="todo-item center-x-y"
+      @mouseenter="hover = true"
+      @mouseleave="hover = false"
       @mousedown.self="handelMouseDown"
       :style="{
           'box-shadow': `0px ${ani.shadowSize}px ${2 * ani.shadowSize}px 0px rgba(0, 0, 0, 0.2) `,
@@ -19,8 +21,14 @@
         }"
         ></div>
         {{title}}
-        <font-awesome-icon icon="times" class="close"  @click="remove"/>
-        <font-awesome-icon icon="adjust" class="update" @click="remove"/>
+        <font-awesome-icon icon="times" 
+        class="close" 
+        :class="{'hover': hover || isDragging}" 
+        @click="remove"/>
+        <font-awesome-icon icon="adjust" 
+        class="update" 
+        :class="{'hover': hover || isDragging}" 
+        @click="remove"/>
       </div>
     </template >
   </Motion>
@@ -48,12 +56,6 @@ export default task;
 
   &:hover{
     background: #fff;
-    & .close{
-      opacity: 0.5;
-    }
-    & .update{
-      opacity: 0.5;
-    }
   }
 }
 
@@ -77,6 +79,10 @@ export default task;
   &:hover{
     opacity: 1 !important;
   }
+}
+
+.hover{
+  opacity: 0.5 ;
 }
 
 .progress{

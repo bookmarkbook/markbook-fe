@@ -98,6 +98,7 @@ export default {
         x:  0,
         y:  0,
       },
+      hover:false
     }
   },
   props: {
