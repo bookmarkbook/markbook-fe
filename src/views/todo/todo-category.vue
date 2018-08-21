@@ -64,6 +64,8 @@ export default {
         const currentIndex = this.getIndex(param.y);
         this.$store.state.todo.isMovingTransefer = false;
         this.$emit("reorder", {
+          fromList: 'todo',
+          toList:'todo',
           from: itemIndex,
           to: currentIndex
         });

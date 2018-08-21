@@ -2,12 +2,10 @@ import * as API from '@/api/index';
 import app from '@/main';
 import { todosMock, wipsMock, donwsMock } from './mock-data';
 
-function reinsert(arr, from, to) {
-  // const _arr = arr.slice(0);
-  const val = arr[from];
-  arr.splice(from, 1);
-  arr.splice(to, 0, val);
-  return arr.slice();
+function reinsert(arrFrom,arrTo ,from, to) {
+  const val = arrFrom[from];
+  arrFrom.splice(from, 1);
+  arrTo.splice(to, 0, val);
 }
 
 
@@ -40,24 +38,15 @@ export default {
     stopMoving(state) {
       state.movingItemId = undefined;
     },
-    addTodo(state, task) {
-      state.todo.unshift(task);
+    addTodo(state, params) {
+      state[params.list] = state[params.list].splice(params.place, 0, params.task);
     },
     moveTodo(state, info) {
-      state.todo = reinsert(state.todo, info.from, info.to);
+      reinsert(state[info.fromList], state[ info.toList], info.from, info.to);
     },
     removeTodo(state, id) {
       state.todo = state.todo.filter(t => t.id !== id);
     },
-    // addTodo(state, task) {
-    //   state.todo.push(task);
-    // },
-    moveWip(state, info) {
-      state.wip = reinsert(state.wip, info.from, info.to);
-    },
-    // removeTodo(state, task) {
-    //   state.todo = state.todo.filter(t => t !== task);
-    // },
 
   },
   actions: {

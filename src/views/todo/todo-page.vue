@@ -48,8 +48,12 @@ export default {
   methods:{
     add(){
       this.$store.commit('todo/addTodo',{
+        task:{
         id:Math.random(),
         title: this.newTodo
+      },
+      place: 0,
+      list: 'todo'
       })
     },
     todoReorder(params){
