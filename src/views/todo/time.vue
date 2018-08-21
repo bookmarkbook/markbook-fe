@@ -8,44 +8,44 @@
 <script>
 let id;
 export default {
-  data(){
+  data() {
     return {
-      time: '12:24',
-      date: '2018 8 16',
-    }
+      time: "12:24",
+      date: "2018 8 16"
+    };
   },
-  methods:{
-    updatetime(){
+  methods: {
+    updatetime() {
       const d = new Date();
       this.time = `${d.getHours()}:${d.getMinutes()}`;
-      this.date = `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()}`
+      this.date = `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()}`;
     }
   },
-  mounted(){
+  mounted() {
     this.updatetime();
-    id=window.setInterval(()=>{
+    id = window.setInterval(() => {
       this.updatetime();
     }, 5000);
   },
-  beforeDestroy(){
+  beforeDestroy() {
     window.clearInterval(id);
   }
-}
+};
 </script>
 
 
 <style lang="scss" scoped>
-.time{
-  width:150px;
+.time {
+  width: 150px;
   text-align: center;
-  padding-top:23px;
-  >h1{
+  padding-top: 23px;
+  > h1 {
     font-size: 43px;
     line-height: 40px;
-    margin:0px;
+    margin: 0px;
   }
-  >span{
-    color:rgb(132, 152, 172);
+  > span {
+    color: rgb(132, 152, 172);
     font-size: 14px;
   }
 }

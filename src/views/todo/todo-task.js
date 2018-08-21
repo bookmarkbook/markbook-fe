@@ -26,7 +26,7 @@ export default {
         return '#76c773'
       } else if (this.status === 'todo') {
         return '#dfd199'
-      } else if (this.status === 'done'){
+      } else if (this.status === 'done') {
         return '#6b8bac'
       } else {
         return '#ddd'
@@ -94,11 +94,11 @@ export default {
       zindex: 0,
       animationProxy: {
         shadowSize: 1,
-        scale:  0,
-        x:  0,
-        y:  0,
+        scale: 0,
+        x: 0,
+        y: 0,
       },
-      hover:false
+      hover: false
     }
   },
   props: {

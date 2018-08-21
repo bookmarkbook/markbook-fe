@@ -22,6 +22,9 @@ export default {
     movingY: 0,
     movingPageX: 0,
     movingPageY: 0,
+
+    transferToList: undefined,
+    transferToIndex: 0,
   },
   mutations: {
     updateMovingInfo(state, info) {

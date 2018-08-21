@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import task from './todo-task.js';
+import task from "./todo-task.js";
 export default task;
 </script>
 
@@ -50,47 +50,47 @@ export default task;
   top: 0px;
   left: 0px;
 
-  border-radius:5px;
+  border-radius: 5px;
   background: #fdfdfd;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     background: #fff;
   }
 }
 
-.update{
+.update {
   transition: 100ms;
   position: absolute;
-  top:3px;
-  left:3px;
+  top: 3px;
+  left: 3px;
   opacity: 0;
-  &:hover{
+  &:hover {
     opacity: 1 !important;
   }
 }
 
-.close{
+.close {
   transition: 100ms;
   position: absolute;
-  top:3px;
-  right:3px;
+  top: 3px;
+  right: 3px;
   opacity: 0;
-  &:hover{
+  &:hover {
     opacity: 1 !important;
   }
 }
 
-.hover{
-  opacity: 0.5 ;
+.hover {
+  opacity: 0.5;
 }
 
-.progress{
-  height:100%;
+.progress {
+  height: 100%;
   position: absolute;
-  left:0px;
+  left: 0px;
   transition: 200ms;
-  border-radius:3px;
+  border-radius: 3px;
   z-index: -1;
 }
 </style>

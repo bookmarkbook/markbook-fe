@@ -19,7 +19,7 @@
       @mousedown="handleMouseDown"
       @mouseup="handleMouseUp"
       @move="handleMove"
-      @remove="handleRemove"
+      @remove="remove"
     />
 
   </div>
@@ -51,7 +51,7 @@ export default {
       this.$store.commit("todo/addTodo", {
         task: {
           id: Math.random(),
-          title: 'my new task'
+          title: "my new task"
         },
         place: 0,
         list: this.todoListName
@@ -65,15 +65,19 @@ export default {
         this.needAddPersudoItem ? this.items.length : this.items.length - 1
       );
     },
+    getItemIndex(id){
+      let itemIndex;
+      for (let i = 0; i < this.items.length; i++) {
+        if (this.items[i].id === id) {
+          itemIndex = i;
+        }
+      }
+      return itemIndex;
+    },
     handleMove(param) {
       this.$store.commit("todo/updateMovingInfo", param);
       if (this.checkInBoundingBox(param.x, param.y)) {
-        let itemIndex;
-        for (let i = 0; i < this.items.length; i++) {
-          if (this.items[i].id === param.id) {
-            itemIndex = i;
-          }
-        }
+        const itemIndex = this.getItemIndex(param.id);
         const currentIndex = this.getIndex(param.y);
         this.$store.state.todo.isMovingTransefer = false;
 
@@ -93,7 +97,16 @@ export default {
       this.updateView();
     },
     handleMouseUp(param) {
+      if(this.$store.state.todo.isMovingTransefer){
+        this.$store.commit("todo/moveTodo", {
+          fromList: this.todoListName,
+          toList: this.$store.state.todo.transferToList,
+          from: this.getItemIndex(this.$store.state.todo.movingItemId),
+          to: this.$store.state.todo.transferToIndex,
+        });
+      }
       this.$store.state.todo.movingItemId = undefined;
+      this.$store.state.todo.isMovingTransefer = false;
       this.updateView();
     },
     setView(newviewPartial, olditem) {
@@ -144,7 +157,7 @@ export default {
       });
       this.items = this.updateOrder(viewData);
     },
-    handleRemove(e) {
+    remove(e) {
       this.$store.commit("todo/removeTodo", {
         list: this.todoListName,
         id: e.id
@@ -203,7 +216,8 @@ export default {
   },
   watch: {
     persudoItemIndex(newVal) {
-      // console.log(newVal);
+      this.$store.state.todo.transferToList = this.todoListName;
+      this.$store.state.todo.transferToIndex = newVal;
       this.updateView();
     },
     todoInfo(newItems) {
