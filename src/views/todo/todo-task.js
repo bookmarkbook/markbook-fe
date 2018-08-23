@@ -4,11 +4,13 @@ let globaltaskIndex = 1;
 
 export default {
   components: { Motion },
-  mounted() {
+  
+  created() {
     this.animationProxy = {
       ...this.animation,
       scale: 0,
     };
+    console.log(this.animationProxy.y);
     setTimeout(() => {
       this.animationProxy = {
         ...this.animation,

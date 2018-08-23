@@ -119,43 +119,29 @@ export default {
       };
       return newview;
     },
-    updateOrder(array) {
+    updateView() {
+      const mid = this.$store.state.todo.movingItemId;
       let yReduce = 0;
-      array = array.map((item, index) => {
-        if (this.$store.state.todo.movingItemId === item.id) {
+      this.items = this.todoInfo.map((info, index) => {
+        if (this.$store.state.todo.movingItemId === info.id) {
           if (this.$store.state.todo.isMovingTransefer) {
             yReduce += 55;
           }
-          return item;
         } else {
           if (this.needAddPersudoItem && index === this.persudoItemIndex) {
             yReduce -= 55;
           }
         }
-        return this.setView(
-          {
-            x: 0,
-            y: index * 55 - yReduce
-          },
-          item
-        );
-      });
-      return array;
-    },
-    updateView() {
-      const mid = this.$store.state.todo.movingItemId;
-      const viewData = this.todoInfo.map(info => {
         return {
           ...info,
           view: {
             shadowSize: info.id === mid ? 16 : 1,
             scale: info.id === mid ? 1.1 : 1,
             x: info.id === mid ? this.$store.state.todo.movingX : 0,
-            y: info.id === mid ? this.$store.state.todo.movingY : 0
+            y: info.id === mid ? this.$store.state.todo.movingY : index * 55 - yReduce,
           }
         };
       });
-      this.items = this.updateOrder(viewData);
     },
     remove(e) {
       this.$store.commit("todo/removeTodo", {
