@@ -94,6 +94,7 @@ export default {
     },
     handleMouseDown(param) {
       this.$store.commit("todo/startMoving", param);
+      this.$store.state.todo.isMovingTransefer = false;
       this.updateView();
     },
     handleMouseUp(param) {
@@ -105,8 +106,8 @@ export default {
           to: this.$store.state.todo.transferToIndex,
         });
       }
-      this.$store.state.todo.movingItemId = undefined;
       this.$store.state.todo.isMovingTransefer = false;
+      this.$store.commit("todo/stopMoving", param);
       this.updateView();
     },
     setView(newviewPartial, olditem) {

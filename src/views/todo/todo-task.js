@@ -10,7 +10,6 @@ export default {
       ...this.animation,
       scale: 0,
     };
-    console.log(this.animationProxy.y);
     setTimeout(() => {
       this.animationProxy = {
         ...this.animation,
@@ -62,6 +61,8 @@ export default {
       this.startPositionY = e.pageY;
       this.$emit("mousedown", {
         id: this.id,
+        x: e.pageX,
+        y: e.pageY,
         translateX: 0,
         translateY: this.initalIndex * 55 + (e.pageY - this.startPositionY),
       });

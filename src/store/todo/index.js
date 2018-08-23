@@ -37,9 +37,13 @@ export default {
       state.movingItemId = info.id;
       state.movingX = info.translateX;
       state.movingY = info.translateY;
+      state.movingPageX = info.x;
+      state.movingPageY = info.y;
     },
     stopMoving(state) {
       state.movingItemId = undefined;
+      state.movingX = 0;
+      state.movingY = 0;
     },
     addTodo(state, params) {
       state[params.list].splice(params.place, 0, params.task);
