@@ -28,7 +28,7 @@
         <font-awesome-icon icon="adjust" 
         class="update" 
         :class="{'hover': hover || isDragging}" 
-        @click="remove"/>
+        @click="update"/>
       </div>
     </template >
   </Motion>

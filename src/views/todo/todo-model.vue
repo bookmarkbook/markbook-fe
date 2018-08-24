@@ -3,7 +3,7 @@
 
     <input type="text" 
     class="input input-general"
-    v-model="newTodo"
+    v-model="title"
     spellcheck="false"
     placeholder="place your task title here"
     >
@@ -11,6 +11,7 @@
     <textarea 
     class="description input-general" 
     spellcheck="false"
+    v-model="description"
     placeholder="make descriptions about your task"></textarea>
 
     <div class="btn-group">
@@ -40,13 +41,42 @@ export default {
   },
   data() {
     return {
-      newTodo: ""
+      title: "",
+      description: ""
     };
+  },
+  computed: {
+    selfId() {
+      return this.$store.state.todo.todoEditId;
+    }
+  },
+  mounted() {
+    const find = todo => {
+      if (todo.id === this.selfId) {
+        this.title = todo.title;
+        this.description = todo.description ? todo.description : "";
+      }
+    };
+    this.$store.state.todo.todo.forEach(find);
+    this.$store.state.todo.wip.forEach(find);
+    this.$store.state.todo.done.forEach(find);
   },
   methods: {
     add() {},
-    deleteItem() {},
-    update() {}
+    deleteItem() {
+      console.log("f");
+      this.$store.commit("todo/removeTodo", {
+        id: this.selfId
+      });
+      this.$store.commit("todo/closeEdit");
+    },
+    update() {
+      this.$store.commit("todo/updateTodo", {
+        id: this.selfId,
+        title: this.title,
+        description: this.description
+      });
+    }
   }
 };
 </script>

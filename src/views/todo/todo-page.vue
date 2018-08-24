@@ -23,9 +23,10 @@
     </div>
 
     <Model 
-    v-if="inCreateNew"
+    v-if="inEditing"
     width="500px"
     height="380px"
+    @close="closeEditing"
     >
       <todoModel :isNew="false"/>
     </Model>
@@ -43,11 +44,18 @@ export default {
   components: { Category, Model, todoModel, mytime },
   data() {
     return {
-      newTodo: "",
-      inCreateNew: false
     };
   },
-  methods: {}
+  computed: {
+    inEditing(){
+      return this.$store.state.todo.showTodoEditor
+    }
+  },
+  methods: {
+    closeEditing(){
+      this.$store.commit('todo/closeEdit');
+    }
+  }
 };
 </script>
 

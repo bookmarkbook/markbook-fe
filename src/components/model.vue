@@ -1,12 +1,15 @@
 <template>
-<div class="model-wrap center-x-y" @click="close">
+<div class="model-wrap center-x-y" @click.self="close">
   <div class="model "
     :style="{
       width: width,
       height: height
-      }"
+    }"
   >
-      <font-awesome-icon icon="times" class=" model-close"  @click="close"/>
+      <font-awesome-icon 
+      icon="times" 
+      class=" model-close general-clickable-word"  
+      @click="close"/>
     <slot></slot>
   </div>
 </div>

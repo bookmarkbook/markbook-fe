@@ -4,7 +4,7 @@ let globaltaskIndex = 1;
 
 export default {
   components: { Motion },
-  
+
   created() {
     this.animationProxy = {
       ...this.animation,
@@ -42,6 +42,9 @@ export default {
     }
   },
   methods: {
+    update() {
+      this.$store.commit('todo/editTodo', { id: this.id })
+    },
     remove() {
       this.animationProxy = {
         ...this.animation,
