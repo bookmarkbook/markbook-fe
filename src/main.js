@@ -8,7 +8,7 @@ import { faPlus, faTimes, faAdjust , faClipboardCheck, faBookmark} from '@fortaw
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faPlus, faTimes, faAdjust, faClipboardCheck, faBookmark);
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false
 
