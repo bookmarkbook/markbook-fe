@@ -3,23 +3,23 @@ export default {
   state: {
     active: 4,
     tree: {
-      name: 'cate',
+      name: 'computer',
       id: 1,
-      open: false,
+      open: true,
       children: [
         {
-          name: 'cate2',
+          name: 'graphics',
           id: 2,
-          open: false,
+          open: true,
           children: [
             {
-              name: 'cate4',
+              name: 'opengl',
               id: 4,
               open: false,
               children: [],
             },
             {
-              name: 'cate5',
+              name: 'd3d',
               id: 5,
               open: false,
               children: [],
@@ -27,7 +27,7 @@ export default {
           ]
         },
         {
-          name: 'cate3',
+          name: 'internet',
           id: 3,
           open: false,
           children: [],

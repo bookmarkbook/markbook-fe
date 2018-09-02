@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/login/login-page.vue'
+import User from './views/user/user-view.vue'
 import Signup from './views/signup/signup-page.vue'
 import Todo from './views/todo/todo-page.vue'
 import Bookmark from './views/bookmark/bookmark-view.vue'
@@ -29,6 +30,11 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: Signup
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: User
     },
     {
       path: '/todo',

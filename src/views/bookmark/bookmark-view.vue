@@ -27,7 +27,6 @@ export default {
 
 .cate-tree{
   width:350px;
-  
 }
 </style>
 

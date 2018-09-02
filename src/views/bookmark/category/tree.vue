@@ -21,6 +21,7 @@ export default {
 .tree{
   padding:5px;
   overflow-y: scroll;
+  height: 100%;
 }
 </style>
 

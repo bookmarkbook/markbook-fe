@@ -2,15 +2,23 @@
   <div class="item">
     <div class="item-self"
     :style="{
-      'padding-left': depth * 10 + 'px',
+      'padding-left': depth * 20 + 'px',
       'color': checkActive?'green':''
     }">
-      <span v-if="data.open && data.children.length>0">></span> 
-      <span v-if="!data.open && data.children.length>0">=</span> 
+      <font-awesome-icon 
+      icon="folder" 
+      class="folder-icon general-clickable-word"
+      v-if="!data.open && data.children.length>0" 
+      @click="expand"/>
+      <font-awesome-icon 
+      icon="folder-open" 
+      class="folder-icon general-clickable-word"
+      v-if="data.open && data.children.length>0" 
+      @click="collapse"/>
       {{data.name}}
     </div>
 
-    <div class="item-child">
+    <div class="item-child" v-if="data.open">
       <treePart 
       v-for="child in data.children"
       :key="child.id"
@@ -37,6 +45,14 @@ export default {
     checkActive(){
       return this.data.id === this.$store.state.cate.active
     }
+  },
+  methods:{
+    expand(){
+      this.data.open = true;
+    },
+    collapse(){
+      this.data.open = false;
+    }
   }
 }
 </script>
@@ -47,9 +63,14 @@ export default {
   height:100%;
 }
 
+.folder-icon{
+  font-size: 12px;
+}
+
 .item-self{
   font-size:14px;
   height:25px;
+  line-height: 25px;
   cursor: pointer;
   &:hover{
     background: #eee;

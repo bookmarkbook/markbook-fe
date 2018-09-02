@@ -11,6 +11,14 @@
       <font-awesome-icon icon="bookmark" />
     </router-link>
     <!-- <router-link to="/" tag="div" class="route general-clickable center-x-y"></router-link> -->
+
+    <div class="user">
+      <router-link to="/user" tag="div" 
+      :active-class="'nav-active'"
+      class="route general-clickable center-x-y">
+        <font-awesome-icon icon="user-circle" />
+      </router-link>
+    </div>
   </nav>
 </template>
 
@@ -30,6 +38,11 @@ export default {
   height:100vh;
   padding-top:20px;
   border-right:$bm-border-line;
+}
+
+.user{
+  position:absolute;
+  bottom:20px;
 }
 
 .nav-active::after{
