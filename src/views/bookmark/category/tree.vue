@@ -3,6 +3,15 @@
     <treePart 
     :depth="0"
     :data="this.$store.state.cate.tree"/>
+    <div class="fake-drag-tree"
+    v-if="this.$store.state.cate.isMovingTree"
+    :style="{
+      left:this.$store.state.cate.movingCurrentX - 50 + 'px',
+      top:this.$store.state.cate.movingCurrentY - 15 + 'px',
+    }"
+    >
+
+    </div>
   </div>
 </template>
 
@@ -22,6 +31,14 @@ export default {
   padding:5px;
   overflow-y: scroll;
   height: 100%;
+}
+
+.fake-drag-tree{
+  width:100px;
+  height:30px;
+  background: #000;
+  position:fixed;
+  pointer-events: none;
 }
 </style>
 

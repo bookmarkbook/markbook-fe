@@ -1,6 +1,8 @@
 <template>
-  <div class="item">
+  <div class="item" >
     <div class="item-self"
+    @mousedown.self ="startDrag"
+    @click.self ="select"
     :style="{
       'padding-left': depth * 20 + 'px',
       'color': checkActive?'green':''
@@ -52,6 +54,22 @@ export default {
     },
     collapse(){
       this.data.open = false;
+    },
+    select(){
+      this.$store.state.cate.active = this.data.id;
+    },
+    stopMoving(e){
+      this.$store.commit('cate/endDragTree', e);
+      window.removeEventListener('mousemove', this.mouseMoving);
+      window.removeEventListener('mouseup', this.stopMoving);
+    },
+    mouseMoving(e){
+      this.$store.commit('cate/updateDragPosition', e);
+    },
+    startDrag(e){
+      this.$store.commit('cate/startDragTree', {e, id: this.data.id});
+      window.addEventListener('mousemove', this.mouseMoving);
+      window.addEventListener('mouseup', this.stopMoving);
     }
   }
 }
@@ -72,6 +90,7 @@ export default {
   height:25px;
   line-height: 25px;
   cursor: pointer;
+  user-select: none;
   &:hover{
     background: #eee;
   }
