@@ -10,6 +10,10 @@
       </div>
     </div>
 
+    <div class="seperator">
+
+    </div>
+
     <div>
       <div 
       v-for="item in list"
@@ -38,6 +42,14 @@ export default {
 <style lang="scss" scoped>
 .bookmark-view{
   display: flex;
+  height:100vh;
+}
+
+.seperator{
+  cursor: ew-resize;
+  border:1px solid;
+  width:5px;
+  height:100%;
 }
 
 .title{
