@@ -1,3 +1,25 @@
+function getViewData(data) {
+  const root = {}
+  function extract(node, ret) {
+    ret.name = node.categoryName;
+    ret.id = Math.random().toString();
+    ret.open = true;
+    ret.children = [];
+    if (node.children) {
+      node.children.forEach(item => {
+        const child = {}
+        extract(item, child)
+        ret.children.push(child);
+      });
+    }
+  }
+  extract(data, root)
+  return root;
+}
+
+import {data as D} from './data'
+
+
 export default {
   namespaced: true,
   mutations: {
@@ -26,52 +48,46 @@ export default {
     movingStartY: 0,
     movingCurrentX: 0,
     movingCurrentY: 0,
-    tree: {
-      name: 'computer',
-      id: 1,
-      open: true,
-      children: [
-        {
-          name: 'graphics',
-          id: 2,
-          open: true,
-          children: [
-            {
-              name: 'opengl',
-              id: 4,
-              open: false,
-              children: [],
-            },
-            {
-              name: 'd3d',
-              id: 5,
-              open: false,
-              children: [],
-            }
-          ]
-        },
-        {
-          name: 'internet',
-          id: 3,
-          open: false,
-          children: [],
-        }
-      ]
-    },
+    tree: getViewData(D),
+    // tree: {
+    //   name: 'root',
+    //   id: 1,
+    //   open: true,
+    //   children: [
+    //     getViewData(D)
+    //   ]
+    //   // children: [
+    //   //   {
+    //   //     name: 'graphics',
+    //   //     id: 2,
+    //   //     open: true,
+    //   //     children: [
+    //   //       {
+    //   //         name: 'opengl',
+    //   //         id: 4,
+    //   //         open: false,
+    //   //         children: [],
+    //   //       },
+    //   //       {
+    //   //         name: 'd3d',
+    //   //         id: 5,
+    //   //         open: false,
+    //   //         children: [],
+    //   //       }
+    //   //     ]
+    //   //   },
+    //   //   {
+    //   //     name: 'internet',
+    //   //     id: 3,
+    //   //     open: false,
+    //   //     children: [],
+    //   //   }
+    //   // ]
+    // },
     filteredList: [
       {
         id: 0,
         title: 'GLSL type checker and minifier online demo',
-        link: 'http://evanw.github.io/glslx/'
-      },
-      {
-        id: 1,
-        title: 'MCMC和Gibbs Sampling算法 - 简书',
-        link: 'http://evanw.github.io/glslx/'
-      },
-      {
-        id: 2,
-        title: 'webgl insights',
         link: 'http://evanw.github.io/glslx/'
       },
       {

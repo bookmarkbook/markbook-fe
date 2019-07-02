@@ -78,7 +78,6 @@ export default {
 <style lang="scss" scoped>
 .item{
   border-top:1px solid #eee;
-  height:100%;
 }
 
 .folder-icon{
@@ -89,6 +88,11 @@ export default {
   font-size:14px;
   height:25px;
   line-height: 25px;
+
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+
   cursor: pointer;
   user-select: none;
   &:hover{

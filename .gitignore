@@ -23,3 +23,6 @@ yarn-error.log*
 # lockfile
 package-lock.json
 yarn.lock
+
+
+src/store/category/data.js

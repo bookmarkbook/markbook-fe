@@ -15,22 +15,22 @@
     </div>
 
     <div>
-      <div 
+      <Item 
       v-for="item in list"
       :key="item.id"
-      >
-      {{item.title}}
-      </div>
+      :link="item.link"
+      :title="item.title"
+      />
     </div>
 
   </div>
 </template>
 
 <script>
-
+import Item from './bookmark-item'
 import treeView from "./category/tree";
 export default {
-  components:{treeView},
+  components:{treeView, Item},
   computed:{
     list(){
       return this.$store.state.cate.filteredList;
@@ -60,6 +60,7 @@ export default {
 
 .cate-tree{
   width:350px;
+  height: 100vh;
 }
 </style>
 
