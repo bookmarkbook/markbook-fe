@@ -1,6 +1,7 @@
 <template>
   <div class="bookmark-item">
-    {{title}}
+    <span>{{title}}</span> <br>
+    <a :href="link" target="_blank" rel="noopener noreferrer">{{link}}</a>
   </div>
 </template>
 
@@ -12,6 +13,12 @@ export default {
 
 <style lang="scss" scoped>
 .bookmark-item{
-  border: 1px solid #000;
+  border-bottom: 1px solid #ddd;
+  padding: 3px;
+
+  >a{
+    font-size: 12px;
+    color: #aaa;
+  }
 }
 </style>

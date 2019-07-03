@@ -1,6 +1,6 @@
 <template>
   <div class="bookmark-view">
-    <div>
+    <div class="category">
       <div class="title">
         CATEGORY TREE
       </div>
@@ -14,7 +14,7 @@
 
     </div>
 
-    <div>
+    <div class="bookmarks">
       <Item 
       v-for="item in list"
       :key="item.id"
@@ -48,22 +48,29 @@ export default {
   height:100vh;
 }
 
+.category{
+  width: 350px;
+  .title{
+    font-size: 16px;
+    padding:10px;
+  }
+
+  .cate-tree{
+    height: calc(100vh - 60px);
+  }
+}
+
 .seperator{
   cursor: ew-resize;
-  border:1px solid;
+  border:1px solid #ddd;
   width:5px;
+  min-width:5px;
   height:100%;
 }
 
-.title{
-  width: 350px;
-  font-size: 16px;
-  padding:10px;
-}
-
-.cate-tree{
-  width:350px;
-  height: 100vh;
+.bookmarks{
+  flex-grow: 1;
+  overflow-y: scroll;
 }
 </style>
 

@@ -1,6 +1,6 @@
 function getViewData(data) {
-  const root = {}
-  function extract(node, ret) {
+  function extract(node) {
+    const ret = {};
     ret.name = node.categoryName;
     ret.id = Math.random().toString();
     ret.open = true;
@@ -8,13 +8,12 @@ function getViewData(data) {
     ret.children = [];
     if (node.children) {
       node.children.forEach(item => {
-        const child = {}
-        extract(item, child)
-        ret.children.push(child);
+        ret.children.push(extract(item));
       });
     }
+    return ret;
   }
-  extract(data, root)
+  const root = extract(data)
   return root;
 }
 
@@ -50,57 +49,5 @@ export default {
     movingCurrentX: 0,
     movingCurrentY: 0,
     tree: getViewData(D),
-    // tree: {
-    //   name: 'root',
-    //   id: 1,
-    //   open: true,
-    //   children: [
-    //     getViewData(D)
-    //   ]
-    //   // children: [
-    //   //   {
-    //   //     name: 'graphics',
-    //   //     id: 2,
-    //   //     open: true,
-    //   //     children: [
-    //   //       {
-    //   //         name: 'opengl',
-    //   //         id: 4,
-    //   //         open: false,
-    //   //         children: [],
-    //   //       },
-    //   //       {
-    //   //         name: 'd3d',
-    //   //         id: 5,
-    //   //         open: false,
-    //   //         children: [],
-    //   //       }
-    //   //     ]
-    //   //   },
-    //   //   {
-    //   //     name: 'internet',
-    //   //     id: 3,
-    //   //     open: false,
-    //   //     children: [],
-    //   //   }
-    //   // ]
-    // },
-    filteredList: [
-      {
-        id: 0,
-        title: 'GLSL type checker and minifier online demo',
-        link: 'http://evanw.github.io/glslx/'
-      },
-      {
-        id: 3,
-        title: 'online demo',
-        link: 'http://evanw.github.io/glslx/'
-      },
-      {
-        id: 4,
-        title: 'GLSL type checker ',
-        link: 'http://evanw.github.io/glslx/'
-      },
-    ]
   }
 }

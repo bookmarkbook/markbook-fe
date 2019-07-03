@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     checkActive(){
-      return this.data.id === this.$store.state.cate.active
+      return this.data.id === this.$store.state.cate.active.id
     }
   },
   methods:{
