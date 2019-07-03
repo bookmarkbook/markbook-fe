@@ -4,6 +4,7 @@ function getViewData(data) {
     ret.name = node.categoryName;
     ret.id = Math.random().toString();
     ret.open = true;
+    ret.bookmarks = node.bookmarks.map(bookmark => { return { id: Math.random().toString(), ...bookmark } });
     ret.children = [];
     if (node.children) {
       node.children.forEach(item => {
@@ -41,7 +42,7 @@ export default {
     }
   },
   state: {
-    active: 4,
+    active: null,
     isMovingTree: false,
     movingTreeItem: undefined,
     movingStartX: 0,

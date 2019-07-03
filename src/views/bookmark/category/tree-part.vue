@@ -56,7 +56,7 @@ export default {
       this.data.open = false;
     },
     select(){
-      this.$store.state.cate.active = this.data.id;
+      this.$store.state.cate.active = this.data;
     },
     stopMoving(e){
       this.$store.commit('cate/endDragTree', e);

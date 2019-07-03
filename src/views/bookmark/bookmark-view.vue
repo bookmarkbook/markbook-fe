@@ -18,7 +18,7 @@
       <Item 
       v-for="item in list"
       :key="item.id"
-      :link="item.link"
+      :link="item.href"
       :title="item.title"
       />
     </div>
@@ -33,7 +33,10 @@ export default {
   components:{treeView, Item},
   computed:{
     list(){
-      return this.$store.state.cate.filteredList;
+      if(this.$store.state.cate.active && this.$store.state.cate.active.bookmarks){
+        return this.$store.state.cate.active.bookmarks;
+      }
+      return [];
     }
   }
 }
