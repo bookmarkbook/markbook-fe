@@ -15,12 +15,18 @@
     </div>
 
     <div class="bookmarks">
-      <Item 
-      v-for="item in list"
-      :key="item.id"
-      :link="item.href"
-      :title="item.title"
-      />
+      <div class="bookmarks-panel">
+        <h2>category title</h2>
+        <button>new category</button>
+      </div>
+      <div class="bookmarks-list">
+        <Item 
+        v-for="item in list"
+        :key="item.id"
+        :link="item.href"
+        :title="item.title"
+        />
+      </div>
     </div>
 
   </div>
@@ -50,6 +56,7 @@ export default {
 
 .category{
   width: 350px;
+  min-width: 350px;
   .title{
     font-size: 16px;
     padding:10px;
@@ -70,7 +77,18 @@ export default {
 
 .bookmarks{
   flex-grow: 1;
-  overflow-y: scroll;
+  position: relative;
+  >.bookmarks-panel{
+    width: 100%;
+    height: 100px;
+    border-bottom:1px solid #ddd;
+    position: absolute;
+  }
+  >.bookmarks-list{
+    overflow-y: scroll;
+    margin-top:100px;
+    height: calc(100% - 100px);
+  }
 }
 </style>
 

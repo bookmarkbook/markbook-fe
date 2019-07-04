@@ -21,6 +21,7 @@ body {
   height:100vh;
   overflow: hidden;
   background:$bm-background-color;
+  
 }
 
 button, textarea, input{

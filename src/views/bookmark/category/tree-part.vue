@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import {treeBus} from './tree-event-bus';
+
 export default {
   name: 'treePart',
   mounted(){
@@ -45,7 +47,7 @@ export default {
   },
   computed: {
     checkActive(){
-      return this.data.id === this.$store.state.cate.active.id
+      return this.$store.state.cate.active && this.data.id === this.$store.state.cate.active.id
     }
   },
   methods:{
@@ -59,15 +61,23 @@ export default {
       this.$store.state.cate.active = this.data;
     },
     stopMoving(e){
-      this.$store.commit('cate/endDragTree', e);
+      treeBus.$data.movingTreeItem = undefined;
+      treeBus.$data.isMovingTree = false;
       window.removeEventListener('mousemove', this.mouseMoving);
       window.removeEventListener('mouseup', this.stopMoving);
     },
     mouseMoving(e){
-      this.$store.commit('cate/updateDragPosition', e);
+      treeBus.$data.movingCurrentX = e.pageX;
+      treeBus.$data.movingCurrentY = e.pageY;
     },
     startDrag(e){
-      this.$store.commit('cate/startDragTree', {e, id: this.data.id});
+
+      treeBus.$data.movingTreeItem = this.data.id;
+      treeBus.$data.movingCurrentX = e.pageX;
+      treeBus.$data.movingCurrentY = e.pageY;
+      treeBus.$data.movingStartX = e.pageX;
+      treeBus.$data.movingStartY = e.pageY;
+      treeBus.$data.isMovingTree = true;
       window.addEventListener('mousemove', this.mouseMoving);
       window.addEventListener('mouseup', this.stopMoving);
     }

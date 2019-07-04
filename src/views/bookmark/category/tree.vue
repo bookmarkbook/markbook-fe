@@ -3,11 +3,12 @@
     <treePart 
     :depth="0"
     :data="this.$store.state.cate.tree"/>
+
     <div class="fake-drag-tree"
-    v-if="this.$store.state.cate.isMovingTree"
+    v-if="treeState.isMovingTree"
     :style="{
-      left:this.$store.state.cate.movingCurrentX - 50 + 'px',
-      top:this.$store.state.cate.movingCurrentY - 15 + 'px',
+      left: treeState.movingCurrentX - 50 + 'px',
+      top: treeState.movingCurrentY - 15 + 'px',
     }"
     >
 
@@ -17,10 +18,12 @@
 
 <script>
 import treePart from './tree-part';
+import {treeBus} from './tree-event-bus';
 export default {
   components:{treePart},
   data(){
     return{
+      treeState: treeBus.$data
     }
   }
 }
